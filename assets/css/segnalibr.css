@@ -8,6 +8,10 @@ body {
   color: #FD8BE1;
 }
 
+.pull-right {
+  float: right;
+}
+
 .nav-spacer {
   height: 56px;
 }
@@ -45,6 +49,11 @@ a:hover {
   font-size: 26px;
 }
 
+.sidebar .active a {
+  color: #687581;
+  font-style: italic;
+}
+
 .sidebar a:hover {
   color: #687581;
 }
@@ -55,6 +64,11 @@ a:hover {
 
 .segnalibr:last-of-type, .nav-item:last-of-type {
   margin-bottom: 1.2em;
+}
+
+.segnalibr.active a {
+  color: #FB17C3;
+  font-style: italic;
 }
 
 .segnalibr-close {
