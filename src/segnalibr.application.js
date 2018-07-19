@@ -4,13 +4,14 @@ angular.module('Segnalibr', [
   'segnalibr.categories',
   'segnalibr.categories.bookmarks',
 ])
-.config(function($stateProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider.state({
     name: 'segnalibr',
-    url: '/',
-    templateUrl: 'src/categories/categories.template.html',
-    controller: 'MainController',
+    url: '',
+    abstract: true,
   })
+
+  $urlRouterProvider.otherwise('/')
 })
 .controller('MainController', function($scope) {
   $scope.categories = [
