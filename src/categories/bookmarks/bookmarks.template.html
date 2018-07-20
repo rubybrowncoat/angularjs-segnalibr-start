@@ -1,4 +1,4 @@
-<h1>{{ currentCategory.name }}</h1>
+<h1>{{ currentCategorySlug }}</h1>
 
 <div class="segnalibr" ng-repeat="bookmark in bookmarks | filter: { category: currentCategory.slug }"
   ng-class="{ active: isCurrentBookmark(bookmark) }">
