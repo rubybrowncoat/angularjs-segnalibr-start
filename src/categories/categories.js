@@ -1,5 +1,5 @@
 angular.module('segnalibr.categories', [
-  'segnalibr.models.category',
+  'segnalibr.models.categories',
 ])
 .config(function($stateProvider) {
   $stateProvider.state({
@@ -9,13 +9,15 @@ angular.module('segnalibr.categories', [
     views: {
       'categories@': {
         templateUrl: 'src/categories/categories.template.html',
-        controller: 'CategoriesController',
+        controller: 'CategoriesListController as categoriesListController',
       },
       'bookmarks@': {
         templateUrl: 'src/categories/bookmarks/bookmarks.template.html',
-        controller: 'BookmarksController',
+        controller: 'BookmarksListController as bookmarksListController',
       }
     }
   })
 })
-.controller('CategoriesController', function($scope) {})
+.controller('CategoriesListController', function(CategoriesModel) {
+  this.categories = CategoriesModel.getCategories()
+})

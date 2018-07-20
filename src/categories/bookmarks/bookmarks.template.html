@@ -1,6 +1,6 @@
-<h1>{{ currentCategorySlug }}</h1>
+<h1>{{ bookmarksListController.currentCategorySlug }}</h1>
 
-<div class="segnalibr" ng-repeat="bookmark in bookmarks | filter: { category: currentCategory.slug }"
+<div class="segnalibr" ng-repeat="bookmark in bookmarksListController.bookmarks | filter: bookmarksListController.currentCategorySlug ? { category: bookmarksListController.currentCategorySlug } : ''"
   ng-class="{ active: isCurrentBookmark(bookmark) }">
   <button type="button" class="close text-perfect segnalibr-close" ng-click="deleteBookmark(bookmark)">&times;</button>
   <button type="button" class="btn btn-outline-secondary" ng-click="doEdit(bookmark)" ng-disabled="isCurrentBookmark(bookmark)">e</button>

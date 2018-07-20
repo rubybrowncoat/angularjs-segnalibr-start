@@ -1,6 +1,6 @@
 angular.module('segnalibr.categories.bookmarks', [
-  'segnalibr.models.category',
-  'segnalibr.models.bookmark',
+  'segnalibr.models.categories',
+  'segnalibr.models.bookmarks',
 
   'segnalibr.categories.bookmarks.create',
   'segnalibr.categories.bookmarks.edit',
@@ -12,11 +12,13 @@ angular.module('segnalibr.categories.bookmarks', [
     views: {
       'bookmarks@': {
         templateUrl: 'src/categories/bookmarks/bookmarks.template.html',
-        controller: 'BookmarksController',
+        controller: 'BookmarksListController as bookmarksListController',
       }
     }
   })
 })
-.controller('BookmarksController', function($scope, $stateParams) {
-  $scope.currentCategorySlug = $stateParams.category
+.controller('BookmarksListController', function($stateParams, BookmarksModel) {
+  this.currentCategorySlug = $stateParams.category || null
+
+  this.bookmarks = BookmarksModel.getBookmarks()
 })
