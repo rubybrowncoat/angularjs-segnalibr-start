@@ -1,45 +1,16 @@
-<h1>{{ bookmarksListController.currentCategorySlug }}</h1>
+<h1>{{ bookmarksListController.getCurrentCategoryName() }}</h1>
 
-<div class="segnalibr" ng-repeat="bookmark in bookmarksListController.bookmarks | filter: bookmarksListController.currentCategorySlug ? { category: bookmarksListController.currentCategorySlug } : ''"
+<div class="segnalibr" ng-repeat="bookmark in bookmarksListController.bookmarks | filter: bookmarksListController.getCurrentCategorySlug() ? { category: bookmarksListController.getCurrentCategorySlug() } : ''"
   ng-class="{ active: isCurrentBookmark(bookmark) }">
-  <button type="button" class="close text-perfect segnalibr-close" ng-click="deleteBookmark(bookmark)">&times;</button>
-  <button type="button" class="btn btn-outline-secondary" ng-click="doEdit(bookmark)" ng-disabled="isCurrentBookmark(bookmark)">e</button>
+  <button type="button" class="close text-perfect segnalibr-close" ng-click="bookmarksListController.deleteBookmark(bookmark)">&times;</button>
+  <button type="button" class="btn btn-outline-secondary" ui-sref="segnalibr.categories.bookmarks.edit({ bookmarkId: bookmark.id })" ng-disabled="isCurrentBookmark(bookmark)">e</button>
   <a href="{{ bookmark.url }}" target="_blank" class="segnalibr-link">{{ bookmark.title }}</a>
 </div>
 
 <hr>
 
-<div ng-if="canCreate() && !isCreating()">
-  <button class="btn btn-lg btn-primary" ng-click="doCreate()">Crea un Segnalibr!</button>
-</div>
-<div ng-if="isCreating()">
-  <form class="create-form" role="form" ng-submit="createBookmark(newBookmark)">
-    <div class="form-group">
-      <label for="bookmarkTitle">Titolo</label>
-      <input type="text" class="form-control" id="bookmarkTitle" placeholder="Titolo del Segnalibr" ng-model="newBookmark.title">
-    </div>
-    <div class="form-group">
-      <label for="bookmarkUrl">URL</label>
-      <input type="text" class="form-control" id="bookmarkUrl" placeholder="URL del Segnalibr" ng-model="newBookmark.url">
-    </div>
-    <button type="submit" class="btn btn-info">Crea</button>
-    <button class="btn btn-warning pull-right" ng-click="cancelForm()">Annulla…</button>
-  </form>
-</div>
-<div ng-if="isEditing()">
-  <h4>Editing: {{ currentBookmark.title }}</h4>
-  <h5>URL: {{ currentBookmark.url }}</h5>
-
-  <form class="edit-form" role="form" ng-submit="editBookmark(editedBookmark)">
-    <div class="form-group">
-      <label for="bookmarkTitle">Titolo</label>
-      <input type="text" class="form-control" id="bookmarkTitle" placeholder="Titolo del Segnalibr" ng-model="editedBookmark.title">
-    </div>
-    <div class="form-group">
-      <label for="bookmarkUrl">URL</label>
-      <input type="text" class="form-control" id="bookmarkUrl" placeholder="URL del Segnalibr" ng-model="editedBookmark.url">
-    </div>
-    <button type="submit" class="btn btn-info">Modifica</button>
-    <button class="btn btn-warning pull-right" ng-click="cancelForm()">Annulla…</button>
-  </form>
-</div>
+<ui-view>
+  <div ng-if="bookmarksListController.getCurrentCategorySlug()">
+    <button class="btn btn-lg btn-primary" ui-sref="segnalibr.categories.bookmarks.create">Crea un Segnalibr!</button>
+  </div>
+</ui-view>

@@ -12,11 +12,12 @@
     integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
 
   <link rel="stylesheet" href="assets/css/segnalibr.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
 </head>
 
-<body ng-controller="MainController">
+<body>
   <nav class="navbar navbar-dark sticky-top bg-obscuro flex-md-nowrap p-0">
-    <a href="#" class="navbar-brand col-md-2 mr-0 text-perfect" ng-click="setCategory(null)">Segnali.br</a>
+    <a href="#" class="navbar-brand col-md-2 mr-0 text-perfect" ui-sref="segnalibr.categories">Segnali.br</a>
     <div class="w-100 nav-spacer bg-perfect"></div>
   </nav>
   <div class="container-fluid">
@@ -38,6 +39,7 @@
     crossorigin="anonymous"></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-animate.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
 
   <script src="src/models/categories.model.js"></script>

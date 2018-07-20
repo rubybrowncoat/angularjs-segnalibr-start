@@ -1,17 +1,57 @@
 angular.module('segnalibr.models.bookmarks', [
   // No Dependencies
 ])
-.service('BookmarksModel', function() {
-  const bookmarks = [
-    { id: 1, title: 'AngularJS', url: 'https://angularjs.org', category: 'development' },
-    { id: 2, title: 'Node.js', url: 'https://nodejs.org', category: 'development' },
-    { id: 3, title: 'GitHub', url: 'https://github.com', category: 'development' },
-    { id: 4, title: 'Material Design', url: 'https://material.io/design/', category: 'design' },
-    { id: 5, title: 'Dwarf Fortress', url: 'http://www.bay12games.com/dwarves/', category: 'videogames' },
-    { id: 6, title: 'The Noun Project', url: 'https://thenounproject.com', category: 'design' },
-    { id: 7, title: 'Rocket League', url: 'https://www.rocketleague.com', category: 'videogames' },
-    { id: 8, title: 'Honorverse', url: 'https://en.wikipedia.org/wiki/Honorverse', category: 'scifi' },
-  ]
+.service('BookmarksModel', function($http, $q) {
+  let bookmarks = []
 
-  this.getBookmarks = () => bookmarks
+  const ENDPOINTS = {
+    FETCH: 'data/bookmarks.json',
+  }
+
+  const extractData = response => response.data
+  const gatherBookmarks = data => bookmarks = data
+
+  this.getBookmarks = () => $q.when(bookmarks.length
+    ? bookmarks
+    : $http.get(ENDPOINTS.FETCH)
+      .then(extractData)
+      .then(gatherBookmarks)
+  )
+
+  const findBookmarkById = bookmarkId => bookmarks.find(bookmark => bookmark.id === +bookmarkId)
+
+  this.getBookmarkById = bookmarkId => {
+    const deferred = $q.defer()
+
+    if (bookmarks.length) {
+      deferred.resolve(findBookmarkById(bookmarkId))
+    } else {
+      this.getBookmarks()
+        .then(() => deferred.resolve(findBookmarkById(bookmarkId)))
+    }
+
+    return deferred.promise
+  }
+
+  this.createBookmark = bookmark => {
+    bookmarks.push({
+      ...bookmark,
+
+      id: bookmarks.length,
+    })
+  }
+
+  this.editBookmark = editedBookmark => {
+    const index = bookmarks.findIndex(bookmark => bookmark.id === editedBookmark.id)
+
+    bookmarks.splice(index, 1, editedBookmark)
+  }
+
+  this.deleteBookmark = deletedBookmark => {
+    if (confirm(`Stai per cancellare il bookmark "${deletedBookmark.title}". L'operazione non è reversibile.`)) {
+      const index = bookmarks.findIndex(bookmark => bookmark.id === deletedBookmark.id)
+
+      bookmarks.splice(index, 1)
+    }
+  }
 })

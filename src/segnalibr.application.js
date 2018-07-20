@@ -1,4 +1,5 @@
 angular.module('Segnalibr', [
+  'ngAnimate',
   'ui.router',
 
   'segnalibr.models.bookmarks',
@@ -68,30 +69,7 @@ angular.module('Segnalibr', [
   }
 
   // CRUD
-  $scope.makeNewBookmark = () => {
-    $scope.newBookmark = {
-      title: '',
-      url: '',
-      category: $scope.currentCategory.slug,
-    }
-  }
 
-  $scope.createBookmark = bookmark => {
-    $scope.bookmarks.push({
-      ...bookmark,
-
-      id: $scope.bookmarks.length + 1,
-    })
-
-    $scope.makeNewBookmark()
-  }
-
-  $scope.currentBookmark = null
-
-  $scope.makeEditedBookmark = (bookmark = {}) => {
-    $scope.currentBookmark = bookmark
-    $scope.editedBookmark = angular.copy(bookmark)
-  }
 
   $scope.isCurrentBookmark = bookmark =>
     $scope.currentBookmark !== null

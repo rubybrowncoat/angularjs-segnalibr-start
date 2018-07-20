@@ -14,11 +14,38 @@ angular.module('segnalibr.categories.bookmarks', [
         templateUrl: 'src/categories/bookmarks/bookmarks.template.html',
         controller: 'BookmarksListController as bookmarksListController',
       }
-    }
+    },
+    params: {
+      category: null,
+    },
   })
 })
-.controller('BookmarksListController', function($stateParams, BookmarksModel) {
-  this.currentCategorySlug = $stateParams.category || null
+.controller('BookmarksListController', function($stateParams, $state, BookmarksModel, CategoriesModel) {
+  const returnToBookmarks = () => {
+    const { category } = $stateParams
 
-  this.bookmarks = BookmarksModel.getBookmarks()
+    if (category) {
+      $state.go('segnalibr.categories.bookmarks', {
+        category,
+      })
+    } else {
+      $state.go('segnalibr.categories')
+    }
+  }
+
+  CategoriesModel.setCurrentCategoryBySlug($stateParams.category)
+
+  BookmarksModel.getBookmarks()
+    .then(bookmarks => this.bookmarks = bookmarks)
+
+  this.cancelForms = () => returnToBookmarks()
+
+  this.deleteBookmark = bookmark => {
+    returnToBookmarks()
+
+    BookmarksModel.deleteBookmark(bookmark)
+  }
+
+  this.getCurrentCategorySlug = CategoriesModel.getCurrentCategorySlug
+  this.getCurrentCategoryName = CategoriesModel.getCurrentCategoryName
 })

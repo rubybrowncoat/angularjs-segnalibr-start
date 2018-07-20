@@ -1,13 +1,47 @@
 angular.module('segnalibr.models.categories', [
   // No Dependencies
 ])
-.service('CategoriesModel', function() {
-  const categories = [
-    { id: 42, slug: 'development', name: 'Development' },
-    { id: 21, slug: 'design', name: 'Design' },
-    { id: 84, slug: 'scifi', name: 'Science Fiction' },
-    { id: 7, slug: 'videogames', name: 'Video Games' },
-  ]
+.service('CategoriesModel', function($http, $q) {
+  let categories = []
+  let currentCategory = null
 
-  this.getCategories = () => categories
+  const ENDPOINTS = {
+    FETCH: 'data/categories.json',
+  }
+
+  const extractData = response => response.data
+  const gatherCategories = data => categories = data
+
+  this.getCategories = () => $q.when(categories.length
+    ? categories
+    : $http.get(ENDPOINTS.FETCH)
+      .then(extractData)
+      .then(gatherCategories)
+  )
+
+  const findCategoryBySlug = categorySlug =>
+    categories.find(category => category.slug === categorySlug)
+
+  this.getCategoryBySlug = categorySlug => {
+    const deferred = $q.defer()
+
+    if (categories.length) {
+      deferred.resolve(findCategoryBySlug(categorySlug))
+    } else {
+      this.getCategories()
+        .then(() => deferred.resolve(findCategoryBySlug(categorySlug)))
+    }
+
+    return deferred.promise
+  }
+
+  this.setCurrentCategoryBySlug = categorySlug => {
+    this.getCategoryBySlug(categorySlug)
+      .then(category => currentCategory = category)
+  }
+
+  this.getCurrentCategory = () => currentCategory
+
+  this.getCurrentCategoryName = () => currentCategory ? currentCategory.name : ''
+  this.getCurrentCategorySlug = () => currentCategory ? currentCategory.slug : ''
 })

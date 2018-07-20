@@ -1,0 +1,90 @@
+[ui-view] {
+  transition: all .4s ease-in-out;
+}
+
+/**/
+[ui-view].ng-enter, [ui-view].ng-leave {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+}
+
+[ui-view].ng-enter {
+  opacity: 0;
+  transform: translateY(-200px);
+}
+
+[ui-view].ng-enter-active {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+[ui-view].ng-leave {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+[ui-view].ng-leave-active {
+  opacity: 0;
+  transform: translateY(200px);
+}
+
+/**/
+ui-view {
+  transition: all .4s ease-in-out;
+}
+
+ui-view.ng-enter, ui-view.ng-leave {
+  position: absolute;
+
+  left: 1.5rem;
+  right: 1.5rem;
+}
+
+ui-view.ng-enter {
+  opacity: 0;
+  transform: translateX(50%);
+}
+
+ui-view.ng-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+ui-view.ng-leave {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+ui-view.ng-leave-active {
+  opacity: 0;
+  transform: translateX(-50%);
+}
+
+/**/
+.segnalibr {
+  transition: all .4s ease-in-out;
+  overflow: hidden;
+}
+
+.segnalibr.ng-enter {
+  opacity: 0;
+  max-height: 0;
+}
+
+.segnalibr.ng-enter-active {
+  opacity: 1;
+  max-height: 2.5em;
+}
+
+.segnalibr.ng-leave {
+  opacity: 1;
+  max-height: 2.5em;
+}
+
+.segnalibr.ng-leave-active {
+  opacity: 0;
+  max-height: 0;
+  margin-top: 0;
+}
