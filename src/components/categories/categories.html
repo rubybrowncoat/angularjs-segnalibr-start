@@ -1,0 +1,7 @@
+<div class="sidebar-sticky">
+  <ul class="nav flex-column">
+    <li class="nav-item" ng-repeat="category in categoriesListController.categories" ng-class="{ active: isCurrentCategory(category) }">
+      <a href="#{{ category.slug }}" ui-sref="segnalibr.categories.bookmarks({ category: category.slug })">{{ category.name }}</a>
+    </li>
+  </ul>
+</div>
