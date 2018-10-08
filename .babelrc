@@ -1,0 +1,13 @@
+{
+  "plugins": ["angularjs-annotate"],
+  "presets": [
+    ["@babel/env", {
+      "shippedProposals": true,
+      "useBuiltIns": "usage",
+      "targets": {
+        "browsers": ["> 1%", "last 2 versions", "not ie <= 9"]
+      }
+    }]
+  ],
+  "sourceType": "module"
+}

@@ -1,0 +1,34 @@
+{
+  "name": "angular.segnalibr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubybrowncoat/angularjs-segnalibr-start.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rubybrowncoat/angularjs-segnalibr-start/issues"
+  },
+  "homepage": "https://github.com/rubybrowncoat/angularjs-segnalibr-start#readme",
+  "dependencies": {
+    "@uirouter/angularjs": "^1.0.20",
+    "angular": "^1.7.5",
+    "angular-animate": "^1.7.5",
+    "babel-plugin-angularjs-annotate": "^0.9.0",
+    "core-js": "^2.5.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-loader": "^8.0.4",
+    "ng-annotate-loader": "^0.6.1",
+    "webpack": "^4.20.2",
+    "webpack-command": "^0.4.1"
+  }
+}
