@@ -1,55 +1,83 @@
+import UidGenerator from '../../utils/uid'
+const bookmarkUids = new UidGenerator('bookmark-')
+
+const endpoints = {
+  fetch: () => `http://localhost:4242/bookmarks`,
+  post: () => `http://localhost:4242/bookmarks`,
+  put: (bookmark) => `http://localhost:4242/bookmarks/${bookmark.id}`,
+  delete: (bookmark) => `http://localhost:4242/bookmarks/${bookmark.id}`,
+}
+
 class BookmarksModel {
-  constructor() {
-    this.bookmarks = [
-      {
-         "id": 1,
-         "title": "AngularJS",
-         "url": "https://angularjs.org",
-         "category": "development"
-      },
-      {
-         "id": 2,
-         "title": "Node.js",
-         "url": "https://nodejs.org",
-         "category": "development"
-      },
-      {
-         "id": 3,
-         "title": "GitHub",
-         "url": "https://github.com",
-         "category": "development"
-      },
-      {
-         "id": 4,
-         "title": "Material Design",
-         "url": "https://material.io/design/",
-         "category": "design"
-      },
-      {
-         "id": 5,
-         "title": "Dwarf Fortress",
-         "url": "http://www.bay12games.com/dwarves/",
-         "category": "videogames"
-      },
-      {
-         "id": 6,
-         "title": "The Noun Project",
-         "url": "https://thenounproject.com",
-         "category": "design"
-      },
-      {
-         "id": 7,
-         "title": "Rocket League",
-         "url": "https://www.rocketleague.com",
-         "category": "videogames"
-      },
-      {
-         "id": 8,
-         "title": "Honorverse",
-         "url": "https://en.wikipedia.org/wiki/Honorverse",
-         "category": "scifi"
-      }
-    ]
+  constructor($http, $q) {
+    'ngInject'
+
+    this.$http = $http
+    this.$q = $q
+
+    this.currentBookmark = null
+    this.bookmarks = []
+  }
+
+  getData(response) {
+    return response.data
+  }
+
+  gatherBookmarks(data) {
+    this.bookmarks = data
+
+    return this.bookmarks
+  }
+
+  getBookmarks() {
+    return this.$q.when(this.bookmarks.length
+      ? this.bookmarks
+      : this.$http.get(endpoints.fetch())
+        .then(response => this.getData(response))
+        .then(data => this.gatherBookmarks(data))
+    )
+  }
+
+  getCurrentBookmark() {
+    return this.currentBookmark
+  }
+
+  setCurrentBookmark(bookmark) {
+    this.getBookmarks()
+      .then(() => this.currentBookmark = bookmark)
+  }
+
+  createBookmark(bookmark) {
+    return this.$http.post(endpoints.post(), bookmark)
+      .then(response => this.getData(response))
+      .then(createdBookmark => {
+        console.log(createdBookmark)
+
+        this.bookmarks.push(createdBookmark)
+      })
+  }
+
+  editBookmark(bookmark) {
+    return this.$http.put(endpoints.put(bookmark), bookmark)
+      .then(response => this.getData(response))
+      .then(editedBookmark => {
+        console.log(editedBookmark)
+
+        const index = this.bookmarks.findIndex(findBookmark => findBookmark.id === editedBookmark.id)
+
+        this.bookmarks.splice(index, 1, editedBookmark)
+      })
+  }
+
+  deleteBookmark(bookmark) {
+    if (confirm('Stai per cancellare un bellissimo bookmark. Ne sei davvero sicuro?')) {
+      return this.$http.delete(endpoints.delete(bookmark), bookmark)
+        .then(() => {
+          const index = this.bookmarks.findIndex(findBookmark => findBookmark.id === bookmark.id)
+
+          this.bookmarks.splice(index, 1)
+        })
+    }
   }
 }
 

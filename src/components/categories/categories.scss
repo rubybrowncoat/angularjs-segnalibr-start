@@ -1,21 +1,10 @@
 .nav-item {
   margin-top: 1em;
-}
+  padding-left: 10px;
 
-.sidebar a {
-  font-family: Gibson;
-  color: #343a40;
-
-  font-size: 26px;
-
-  transition: all .3s ease-in-out;
-}
-.sidebar .active a {
-  font-style: italic;
-  color: #687581;
-}
-.sidebar a:hover {
-    color: #687581;
+  &.active {
+    background: linear-gradient(to right, #343a40 0%, #343a40 7px, transparent 8px, transparent 100%);
+  }
 }
 
 @media (min-width: 382px) {

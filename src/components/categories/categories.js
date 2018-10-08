@@ -1,9 +1,11 @@
 import angular from 'angular'
 
+import CategoryItemModule from '../category.item/category.item'
+
 import categoriesComponent from './categories.component'
 
 const CategoriesModule = angular.module('segnalibr.categories', [
-  // No Deps
+  CategoryItemModule.name,
 ])
 .component('categories', categoriesComponent)
 

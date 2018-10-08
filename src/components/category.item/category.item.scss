@@ -1,0 +1,19 @@
+.category-item {
+  font-family: Gibson;
+  color: #343a40;
+
+  font-size: 26px;
+
+  transition: all .3s ease-in-out;
+
+  cursor: pointer;
+
+  &:hover {
+    color: #687581;
+  }
+
+  &.active {
+    font-style: italic;
+    color: #687581;
+  }
+}
